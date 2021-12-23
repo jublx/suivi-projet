@@ -7,5 +7,6 @@ app.use(express.json())
 
 // routes
 app.use('/projects', require('./routes/project.routes'))
+app.use('/tasks', require('./routes/task.routes'))
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`))
