@@ -6,6 +6,8 @@ const projectValidators = require('../middlewares/project.validate')
 
 
 router.get('/', ProjectController.getAllProjects)
+router.get('/current', ProjectController.getCurrentProjects)
+router.get('/archived', ProjectController.getArchivedProjects)
 router.get('/:id', ProjectController.getProject)
 router.get('/archive/:id', ProjectController.archiveProject)
 router.post('/', validate(projectValidators.addProjectValidator), ProjectController.addProject)

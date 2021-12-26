@@ -4,16 +4,63 @@ const { prisma } = require('../prisma/prisma')
 module.exports.getAllProjects = async (req, res) => {
   const projects = await prisma.project.findMany({
     include: {
-      tasks: true
+      tasks: {
+        include: {
+          responsibles: true,
+          comments: true
+        }
+      }
     }
   })
-  return res.send(projects)
+  return res.json(projects)
+}
+
+module.exports.getCurrentProjects = async (req, res) => {
+  const projects = await prisma.project.findMany({
+    where: {
+      isArchived: false
+    },
+    include: {
+      tasks: {
+        include: {
+          responsibles: true,
+          comments: true
+        }
+      }
+    }
+  })
+  return res.json(projects)
+}
+
+module.exports.getArchivedProjects = async (req, res) => {
+  const projects = await prisma.project.findMany({
+    where: {
+      isArchived: true
+    },
+    include: {
+      tasks: {
+        include: {
+          responsibles: true,
+          comments: true
+        }
+      }
+    }
+  })
+  return res.json(projects)
 }
 
 module.exports.getProject = async (req, res) => {
   const project = await prisma.project.findUnique({
     where: {
       id: parseInt(req.params.id)
+    },
+    include: {
+      tasks: {
+        include: {
+          responsibles: true,
+          comments: true
+        }
+      }
     }
   })
   if(!project) return res.status(404).end()
@@ -27,7 +74,7 @@ module.exports.addProject = async (req, res) => {
       name
     }
   })
-  res.json(result)
+  return res.json(result)
 }
 
 module.exports.updateProject = async (req, res) => {
@@ -38,11 +85,15 @@ module.exports.updateProject = async (req, res) => {
       where: { id: Number(id) },
       data: {
         name
+      },
+      include: {
+        responsibles: true,
+        comments: true
       }
     })
-    res.json(project)
+    return res.json(project)
   } catch(err) {
-    res.json({ error: `Le projet d'ID = ${id} n'existe pas. ` })
+    return res.json({ error: `Le projet d'ID = ${id} n'existe pas. ` })
   }
 }
 
@@ -55,9 +106,9 @@ module.exports.archiveProject = async (req, res) => {
         isArchived: true
       }
     })
-    res.json(project)
+    return res.json(project)
   } catch(err) {
-    res.json({ error: `Le projet d'ID = ${id} n'existe pas. ` })
+    return res.json({ error: `Le projet d'ID = ${id} n'existe pas. ` })
   }
 }
 
@@ -66,5 +117,5 @@ module.exports.deleteProject = async (req, res) => {
   const project = await prisma.project.delete({
     where: { id: Number(id) }
   })
-  res.json(project)
+  return res.json(project)
 }

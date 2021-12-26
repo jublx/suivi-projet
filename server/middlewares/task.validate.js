@@ -10,9 +10,6 @@ module.exports.addTaskValidator = [
   body('isUrgent').isBoolean().withMessage("L'attribut 'isUrgnet' doit être de type booléen. ")
                   .optional(),
   body('startDate').isDate().withMessage("La date n'est pas valide. "),
-  body('comment').isString()
-                 .isLength({min: 3, max: 2048}).withMessage("La taille du commentaire ne doit pas dépasser 2048 caractères")
-                 .optional(),
   body('projectId').exists().withMessage("Erreur : l'ID du projet doit être spécifié. ")
                    .isNumeric()
 ]
@@ -34,10 +31,15 @@ module.exports.updateTaskValidator = [
   body('blocking').isBoolean()
                   .optional(),
   body('additionnalNeeds').isBoolean()
-                          .optional(),
-  body('comment').isString()
-                 .isLength({min: 3, max: 2048}).withMessage("La taille du commentaire ne doit pas dépasser 2048 caractères")
-                 .optional(),
+                          .optional()
+]
+
+module.exports.addCommentToTaskValidator = [
+  body('taskId').exists(),
+  body('text').exists()
+              .isString()
+              .isLength({min: 3, max: 2048})
+              .trim()
 ]
 
 module.exports.deleteTaskValidator = [

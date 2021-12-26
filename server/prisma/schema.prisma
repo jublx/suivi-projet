@@ -15,18 +15,18 @@ model Project {
 }
 
 model Task {
-  id               Int      @id @default(autoincrement())
+  id               Int       @id @default(autoincrement())
   name             String
-  isImportant      Boolean  @default(false)
-  isUrgent         Boolean  @default(false)
-  startDate        DateTime @default(now())
+  isImportant      Boolean   @default(false)
+  isUrgent         Boolean   @default(false)
+  startDate        DateTime  @default(now())
   necessaryDays    Int?
-  state            Int      @default(0)
-  blocking         Boolean  @default(false)
-  additionnalNeeds Boolean  @default(false)
-  comment          String?
+  state            Int       @default(0)
+  blocking         Boolean   @default(false)
+  additionnalNeeds Boolean   @default(false)
+  comments         Comment[]
   projectId        Int
-  project          Project  @relation(fields: [projectId], references: [id])
+  project          Project   @relation(fields: [projectId], references: [id])
   responsibles     Entity[]
 }
 
@@ -34,4 +34,12 @@ model Entity {
   id    Int    @id @default(autoincrement())
   name  String
   tasks Task[]
+}
+
+model Comment {
+  id     Int      @id @default(autoincrement())
+  text   String
+  date   DateTime @default(now())
+  taskId Int
+  task   Task     @relation(fields: [taskId], references: [id])
 }

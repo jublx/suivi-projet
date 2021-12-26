@@ -1,15 +1,25 @@
 const { prisma } = require('../prisma/prisma')
+const { connect, param } = require('../routes/project.routes')
 
+
+module.exports.getAllTasks = async (req, res) => {
+  const tasks = await prisma.task.findMany({
+    include: {
+      responsibles: true,
+      comments: true
+    }
+  })
+  return res.json(tasks)
+}
 
 module.exports.addTask = async (req, res) => {
-  const { name, isImportant, isUrgent, startDate, comment, projectId } = req.body
+  const { name, isImportant, isUrgent, startDate, projectId } = req.body
   const task = await prisma.task.create({
     data: {
       name,
       isImportant,
       isUrgent,
       startDate: new Date(startDate),
-      comment,
       project: { connect: { id: projectId }}
     }
   })
@@ -19,7 +29,7 @@ module.exports.addTask = async (req, res) => {
 
 module.exports.updateTask = async (req, res) => {
   const { id } = req.params
-  const { name, isImportant, isUrgent, startDate, necessaryDays, state, blocking, additionnalNeeds, comment } = req.body
+  const { name, isImportant, isUrgent, startDate, necessaryDays, state, blocking, additionnalNeeds } = req.body
   try {
     const task = await prisma.task.update({
       where: { id: Number(id) },
@@ -31,13 +41,98 @@ module.exports.updateTask = async (req, res) => {
         necessaryDays,
         state,
         blocking,
-        additionnalNeeds,
-        comment
+        additionnalNeeds
       }
     })
-    res.json(task)
+    return res.json(task)
   } catch(err) {
-    res.json({ error: `La tâche d'ID = ${id} n'existe pas. ` })
+    return res.json({ error: `La tâche d'ID = ${id} n'existe pas. ` })
+  }
+}
+
+module.exports.addCommentToTask = async (req, res) => {
+  const { taskId, text } = req.body
+  try {
+    const task = await prisma.task.update({
+      where: { id: Number(taskId) },
+      data: {
+        comments: {
+          create: {
+            text: text
+          }
+        }
+      },
+      include: {
+        responsibles: true,
+        comments: true
+      }
+    })
+    return res.json(task)
+  } catch(err) {
+    return res.json(err)
+  }
+}
+
+module.exports.deleteCommentFromTask = async (req, res) => {
+  const { taskId, commentId } = req.params
+  try {
+    const task = await prisma.task.update({
+      where: { id: Number(taskId) },
+      data: {
+        comments: {
+          delete: {
+            id: Number(commentId)
+          }
+        }
+      },
+      include: {
+        responsibles: true,
+        comments: true
+      }
+    })
+    return res.json(task)
+  } catch(err) {
+    return res.json(err)
+  }
+}
+
+module.exports.addEntityToTask = async (req, res) => {
+  const { taskId, entityId } = req.params
+  try {
+    const task = await prisma.task.update({
+      where: { id: Number(taskId) },
+      data: {
+        responsibles: {
+          connect: { id: Number(entityId) }
+        }
+      },
+      include: {
+        responsibles: true,
+      }
+    })
+    return res.json(task)
+  } catch(err) {
+    return res.json(err)
+  }
+}
+
+module.exports.removeEntityFromTask = async (req, res) => {
+  const { taskId, entityId } = req.params
+  try {
+    const task = await prisma.task.update({
+      where: { id: Number(taskId) },
+      data: {
+        responsibles: {
+          disconnect: { id: Number(entityId) }
+        }
+      },
+      include: {
+        responsibles: true
+      }
+    })
+    return res.json(task)
+  } catch(err) {
+    return res.json(err)
   }
 }
 
