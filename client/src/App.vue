@@ -1,7 +1,7 @@
 <template>  
   <header class="text-white bg-gray-800">
     <nav class="h-64">
-      <div class="container mx-auto flex flex-wrap p-5 pt-12 pb justify-between">
+      <div class="container mx-auto w-11/12 3xl:w-4/5 flex flex-wrap p-5 pt-12 pb justify-between">
         <div>
           <router-link to="/" class="text-3xl font-bold hover:text-gray-300 transition-colors" href="#">Suivi Projet</router-link>
         </div>        
@@ -15,7 +15,7 @@
     </nav>
   </header>
 
-  <div class="container min-h-screen px-5 py-10 mx-auto w-11/12 shadow-xl -mt-[120px] rounded-3xl bg-white">
+  <div class="container min-h-screen px-5 py-10 mx-auto w-11/12 3xl:w-4/5 shadow-xl -mt-[120px] rounded-3xl bg-white">
     <router-view></router-view>
   </div>
 
