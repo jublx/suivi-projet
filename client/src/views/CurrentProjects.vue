@@ -1,8 +1,9 @@
 <template>
   <div class="mt-10">
-    <div class="grid md:grid-cols-2 gap-y-4 lg:w-11/12 w-[98%] mx-auto px-px mb-10">
+    <div class="grid md:grid-cols-5 lg:grid-cols-4 grid-flow-row gap-y-2 lg:w-11/12 w-[98%] mx-auto px-px mb-10">
       <team-selector @change="changeSelectedTeam"></team-selector>
-      <input v-model="search" class="justify-self-end mt-1 px-3 py-2 w-full md:w-1/2 bg-white border shadow-sm border-gray-300 placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-blue-500 block rounded-md sm:text-sm focus:ring-1" placeholder="Rechercher par nom"/>
+      <input v-model="search" class="md:col-span-3 lg:col-span-2 justify-self-center mt-1 px-3 py-2 w-full bg-white border shadow-sm border-gray-300 placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-blue-500 block rounded-md sm:text-sm focus:ring-1" placeholder="Rechercher par nom"/>
+      <router-link to="/projects/add" class="mt-8 md:mt-1 w-full md:w-fit justify-self-end font-bold bg-blue-600 hover:bg-blue-700 transition-all text-white px-4 py-2 rounded-md"><i class="fas fa-plus"/>Ajouter</router-link>
     </div>
     <transition-group name="list" tag="div" v-on:before-enter="beforeEnter" v-on:enter="enter" v-on:leave="leave">
       <div v-for="(project, index) in filteredProjectList" :key="project.id" :data-index="index">
