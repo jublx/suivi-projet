@@ -1,5 +1,4 @@
 const { prisma } = require('../prisma/prisma')
-const { connect, param } = require('../routes/project.routes')
 
 
 module.exports.getAllTasks = async (req, res) => {
@@ -14,17 +13,20 @@ module.exports.getAllTasks = async (req, res) => {
 
 module.exports.addTask = async (req, res) => {
   const { name, isImportant, isUrgent, startDate, projectId } = req.body
-  const task = await prisma.task.create({
-    data: {
-      name,
-      isImportant,
-      isUrgent,
-      startDate: new Date(startDate),
-      project: { connect: { id: projectId }}
-    }
-  })
-  if(!task) return res.status(404).end()
-  else return res.json(task)
+  try {
+    const task = await prisma.task.create({
+      data: {
+        name,
+        isImportant,
+        isUrgent,
+        startDate: new Date(startDate),
+        project: { connect: { id: projectId }}
+      }
+    })
+    return res.json(task)
+  } catch(err) {
+    return res.status(400).json(err)
+  }
 }
 
 module.exports.updateTask = async (req, res) => {

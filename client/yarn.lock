@@ -910,6 +910,11 @@
   "resolved" "https://registry.npmjs.org/util-deprecate/-/util-deprecate-1.0.2.tgz"
   "version" "1.0.2"
 
+"velocity-animate@^1.5.2":
+  "integrity" "sha512-m6EXlCAMetKztO1ppBhGU1/1MR3IiEevO6ESq6rcrSQ3Q77xYSW13jkfXW88o4xMrkXJhy/U7j4wFR/twMB0Eg=="
+  "resolved" "https://registry.npmjs.org/velocity-animate/-/velocity-animate-1.5.2.tgz"
+  "version" "1.5.2"
+
 "vite@^2.5.10", "vite@^2.7.2":
   "integrity" "sha512-GAY1P+9fLJOju1SRm8+hykVnEXog+E+KXuqqyMBQDriKCUIKzWnPn142yNNhSdf/ixYGYdUa5ce3A8WaEajzGw=="
   "resolved" "https://registry.npmjs.org/vite/-/vite-2.7.3.tgz"

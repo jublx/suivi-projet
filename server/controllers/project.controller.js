@@ -9,7 +9,8 @@ module.exports.getAllProjects = async (req, res) => {
           responsibles: true,
           comments: true
         }
-      }
+      },
+      team: true
     }
   })
   return res.json(projects)
@@ -26,7 +27,8 @@ module.exports.getCurrentProjects = async (req, res) => {
           responsibles: true,
           comments: true
         }
-      }
+      },
+      team: true
     }
   })
   return res.json(projects)
@@ -68,13 +70,18 @@ module.exports.getProject = async (req, res) => {
 }
 
 module.exports.addProject = async (req, res) => {
-  const { name } = req.body
-  const result = await prisma.project.create({
-    data: {
-      name
-    }
-  })
-  return res.json(result)
+  const { name, teamId } = req.body
+  try {
+    const project = await prisma.project.create({
+      data: {
+        name,
+        team: { connect: { id: teamId }}
+      }
+    })
+    return res.json(project)
+  } catch(err) {
+    return res.status(400).json(err)
+  }
 }
 
 module.exports.updateProject = async (req, res) => {

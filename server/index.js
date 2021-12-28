@@ -8,6 +8,7 @@ app.use(cors())
 app.use(express.json())
 
 // routes
+app.use('/teams', require('./routes/team.routes'))
 app.use('/projects', require('./routes/project.routes'))
 app.use('/tasks', require('./routes/task.routes'))
 app.use('/entities', require('./routes/entity.routes'))

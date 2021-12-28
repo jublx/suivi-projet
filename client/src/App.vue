@@ -3,7 +3,9 @@
     <nav class="h-64">
       <div class="container mx-auto w-11/12 3xl:w-4/5 flex flex-wrap p-5 pt-12 pb justify-between">
         <div>
-          <router-link to="/" class="text-3xl font-bold hover:text-gray-300 transition-colors" href="#">Suivi Projet</router-link>
+          <router-link to="/" class="group text-3xl font-bold transition-colors italic" href="#">
+            <i class="fas fa-frog group-hover:text-lime-500 transition-all"/> Suivi Projet
+          </router-link>
         </div>        
         <router-link to="/settings" class="-my-1 text-sm font-medium text-gray-700" href="#">
           <button class="flex items-center px-2 py-2 font-medium tracking-wide text-black capitalize transition-colors duration-200 transform bg-white rounded-md hover:bg-gray-300 focus:outline-none">

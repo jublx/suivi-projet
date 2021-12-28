@@ -4,7 +4,8 @@ const { body, param } = require('express-validator')
 module.exports.addProjectValidator = [
   body('name').exists().withMessage("Veuillez donner un nom à votre projet. ")
               .isLength({min: 3, max: 60}).withMessage("La taille du nom du projet doit être comprise entre 3 et 60 caractères")
-              .trim()
+              .trim(),
+  body('teamId').exists().withMessage("Veuillez spécifier l'ID de l'équipe à laquelle est rataché le projet. ")
 ]
 
 module.exports.updateProjectValidator = [

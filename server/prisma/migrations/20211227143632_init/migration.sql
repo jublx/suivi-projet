@@ -1,7 +1,17 @@
 -- CreateTable
+CREATE TABLE "Team" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "name" TEXT NOT NULL,
+    "color" TEXT NOT NULL
+);
+
+-- CreateTable
 CREATE TABLE "Project" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "name" TEXT NOT NULL
+    "name" TEXT NOT NULL,
+    "isArchived" BOOLEAN NOT NULL DEFAULT false,
+    "teamId" INTEGER NOT NULL,
+    CONSTRAINT "Project_teamId_fkey" FOREIGN KEY ("teamId") REFERENCES "Team" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 -- CreateTable
@@ -15,7 +25,6 @@ CREATE TABLE "Task" (
     "state" INTEGER NOT NULL DEFAULT 0,
     "blocking" BOOLEAN NOT NULL DEFAULT false,
     "additionnalNeeds" BOOLEAN NOT NULL DEFAULT false,
-    "comment" TEXT,
     "projectId" INTEGER NOT NULL,
     CONSTRAINT "Task_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "Project" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
@@ -24,6 +33,15 @@ CREATE TABLE "Task" (
 CREATE TABLE "Entity" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "name" TEXT NOT NULL
+);
+
+-- CreateTable
+CREATE TABLE "Comment" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "text" TEXT NOT NULL,
+    "date" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "taskId" INTEGER NOT NULL,
+    CONSTRAINT "Comment_taskId_fkey" FOREIGN KEY ("taskId") REFERENCES "Task" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 -- CreateTable
