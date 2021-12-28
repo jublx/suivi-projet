@@ -1,8 +1,8 @@
 <template>
   <div class="mt-10">
-    <div class="flex justify-between lg:w-11/12 w-[98%] mx-auto px-px mb-10">
-      <team-selector></team-selector>
-      <input v-model="search" class="mt-1 px-3 py-2 w-full md:w-1/2 lg:w-1/3 bg-white border shadow-sm border-gray-300 placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-blue-500 block rounded-md sm:text-sm focus:ring-1" placeholder="Rechercher par nom"/>
+    <div class="grid md:grid-cols-2 gap-y-4 lg:w-11/12 w-[98%] mx-auto px-px mb-10">
+      <team-selector @change="changeSelectedTeam"></team-selector>
+      <input v-model="search" class="justify-self-end mt-1 px-3 py-2 w-full md:w-1/2 bg-white border shadow-sm border-gray-300 placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-blue-500 block rounded-md sm:text-sm focus:ring-1" placeholder="Rechercher par nom"/>
     </div>
     <transition-group name="list" tag="div" v-on:before-enter="beforeEnter" v-on:enter="enter" v-on:leave="leave">
       <div v-for="(project, index) in filteredProjectList" :key="project.id" :data-index="index">
@@ -57,7 +57,7 @@ export default {
       projectData: [],
       search: "",
       projectFilter: {
-        team: "all"
+        team: "toutes"
       }
     }
   },
@@ -73,7 +73,7 @@ export default {
     filteredProjectList() {
       if(!this.loading) {
         return this.projectData.filter((entry) => {
-          return entry.name.toLowerCase().includes(this.search.toLowerCase()) && (entry.team.name == this.projectFilter.team || this.projectFilter.team == "all")
+          return entry.name.toLowerCase().includes(this.search.toLowerCase()) && (entry.team.name == this.projectFilter.team || this.projectFilter.team == "toutes")
         })
       } else {
         return []
@@ -81,6 +81,9 @@ export default {
     }
   },
   methods: {
+    changeSelectedTeam(team) {
+      this.projectFilter.team = team
+    },
     beforeEnter: function (el, done) {
       el.style.opacity = 0
     },
