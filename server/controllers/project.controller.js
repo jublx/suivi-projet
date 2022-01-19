@@ -62,7 +62,8 @@ module.exports.getProject = async (req, res) => {
           responsibles: true,
           comments: true
         }
-      }
+      },
+      team: true
     }
   })
   if(!project) return res.status(404).end()

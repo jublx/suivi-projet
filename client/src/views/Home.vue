@@ -1,6 +1,6 @@
 <template>  
-  <div class="flex items-start mx-10">
-    <h1 class="text-4xl font-thin">Dashboard</h1>
+  <div class="flex justify-between w-11/12 mx-auto">
+    <h1 class="text-4xl font-thin">Tableau de bord</h1>
   </div>
   <div class="container mx-auto mt-10">
     <router-link to="/projects/current">
@@ -25,6 +25,6 @@ export default {
     return {
       view: 0,
     }
-  }
+  },
 }
 </script>

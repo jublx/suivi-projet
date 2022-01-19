@@ -44,4 +44,24 @@
   color: #2c3e50;
   background-color: #F3F4F6;
 }
+
+/* declare team colors for tailwind to generate them, as FIP mode must be active since tailwindcss 3 */
+.bg-red-600 {}
+.bg-orange-600 {}
+.bg-amber-600 {}
+.bg-yellow-600 {}
+.bg-lime-600 {}
+.bg-green-600 {}
+.bg-emerald-600 {}
+.bg-teal-600 {}
+.bg-cyan-600 {}
+.bg-sky-600 {}
+.bg-blue-600 {}
+.bg-indigo-600 {}
+.bg-violet-600 {}
+.bg-purple-600 {}
+.bg-fuchsia-600 {}
+.bg-pink-600 {}
+.bg-rose-600 {}
 </style>
+
